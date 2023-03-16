@@ -1,18 +1,21 @@
 version: '3.9'
 services:
-  node:
-    build: .
-    ports:
-      - "3000:3000"
+  app:
+    # Utiliser l'image construite précédemment
+    image: ma_super_app
+    # Définir les variables d'environnement pour configurer l'application
+    environment:
+      - DATABASE_HOST=mysql
+      - DATABASE_PORT=3306
+      - DATABASE_USERNAME=root
+      - DATABASE_PASSWORD=passwordrootdb
+      - DATABASE_NAME=dbname
+    # Lier l'application au conteneur de la base de données
     depends_on:
       - mysql
-    environment:
-      DATABASE_HOST: mysql
-      DATABASE_PORT: 3306
-      DATABASE_USERNAME: root
-      DATABASE_PASSWORD: passwordrootdb
-      DATABASE_NAME: dbname
-
+    # Exposer le port 3000 utilisé par l'application
+    ports:
+      - "3000:3000"
   mysql:
     image: mysql:5.7
     environment:
@@ -20,3 +23,5 @@ services:
       MYSQL_DATABASE: dbname
       MYSQL_USER: user
       MYSQL_PASSWORD: passworddb
+    ports:
+      - "3306:3306"
