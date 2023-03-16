@@ -1,7 +1,22 @@
 version: '3.9'
-  services:
-    node:
-      ...
+services:
+  node:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mysql
+    environment:
+      DATABASE_HOST: mysql
+      DATABASE_PORT: 3306
+      DATABASE_USERNAME: root
+      DATABASE_PASSWORD: passwordrootdb
+      DATABASE_NAME: dbname
 
-    mysql:
-      ...
+  mysql:
+    image: mysql:5.7
+    environment:
+      MYSQL_ROOT_PASSWORD: passwordrootdb
+      MYSQL_DATABASE: dbname
+      MYSQL_USER: user
+      MYSQL_PASSWORD: passworddb

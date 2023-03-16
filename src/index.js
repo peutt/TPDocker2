@@ -9,9 +9,9 @@ const HOST = '0.0.0.0';
 const app = express();
 app.get('/', (req, res) => {
   var connection = mysql.createConnection({
-    host: process.env.DATABASE_HOST || '0.0.0.0' ,
-    port: process.env.DATABASE_PORT || 3306,
-    user: process.env.DATABASE_USERNAME,
+    host: process.env.DATABASE_HOST,
+    port: process.env.DATABASE_PORT,
+    user: process.env.DATABASE_USERNAME ,
     password: process.env.DATABASE_PASSWORD,
     database: process.env.DATABASE_NAME,
   })
@@ -19,6 +19,7 @@ app.get('/', (req, res) => {
   connection.connect(function (error) {
     if (error) {
       console.log("Connection to MySQL failed.");
+      console.log(connection);
       throw error
     }
   });
